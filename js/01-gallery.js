@@ -38,7 +38,7 @@ function openModal(event) {
             onShow: createListener,
         });
     instance.show();
-};
+}
 
 function eskCloseModal(event) {
     console.log((event));
