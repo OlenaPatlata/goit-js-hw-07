@@ -3,10 +3,6 @@ import { galleryItems } from './gallery-items.js';
 
 // console.log(galleryItems);
 const ulGallary = document.querySelector('.gallery');
-const lightBox = document.querySelector('.lightbox');
-const imgLightbox = document.querySelector(".lightbox__image");
-const lightboxBtn = document.querySelector('.lightbox__button');
-const lightboxOverlay= document.querySelector('.lightbox__overlay');
 
 const markup = galleryItems.map(({ preview, original, description }) => {
     return `<div class="gallery__item">
@@ -25,39 +21,36 @@ const markup = galleryItems.map(({ preview, original, description }) => {
 ulGallary.insertAdjacentHTML('afterbegin', markup);
 ulGallary.addEventListener('click', openModal);
 
+let instance = null;
+
 function openModal(event) {
     event.preventDefault();
+
     if (event.target.tagName !== "IMG") {
         return;
-    }
-
-    window.addEventListener("keydown", eskCloseModal);
+    };
 
     const dataSource = event.target.dataset.source;
     
-    lightBox.classList.add("is-open");
-    imgLightbox.src = dataSource;
-}
+    instance = basicLightbox.create(`<img src="${dataSource}" width="800" height="600">`,
+        {
+            onClose: removeListener,
+            onShow: createListener,
+        });
+    instance.show();
+};
 
-lightboxBtn.addEventListener('click', closeModal);
-
-function closeModal(event) {
-    lightBox.classList.remove("is-open");
-    imgLightbox.src = "";
-    window.removeEventListener("keydown", eskCloseModal);
-}
-
-lightboxOverlay.addEventListener("click", closeModal)
-
-
-
-function eskCloseModal(event){
+function eskCloseModal(event) {
+    console.log((event));
     if (event.code === "Escape") {
-        closeModal();
-        }
-}
+        instance.close();
+    }
+};
 
+function createListener(instance) {
+    window.addEventListener("keydown", eskCloseModal)
+};
 
-//  instance = basicLightbox.create(`<img src="${imageSrc}" width="800" height="600">`,  {   onShow: onModalShow,  onClose: onModalCLose,   });
-//   instance.show();
-// }
+function removeListener(instance) {
+    window.removeEventListener("keydown", eskCloseModal)
+};
