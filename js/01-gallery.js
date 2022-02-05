@@ -56,3 +56,8 @@ function eskCloseModal(event){
         closeModal();
         }
 }
+
+
+//  instance = basicLightbox.create(`<img src="${imageSrc}" width="800" height="600">`,  {   onShow: onModalShow,  onClose: onModalCLose,   });
+//   instance.show();
+// }
