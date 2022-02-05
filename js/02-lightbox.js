@@ -7,7 +7,7 @@ const ulRef = document.querySelector('.gallery');
 const markup = galleryItems.map(({ preview, original, description }) => {
     return `<li>
     <a class="gallery__item" href="${original}">
-    <img class="gallery__image" src="${preview}" alt="${description}" title="${description}"/>
+    <img class="gallery__image" src="${preview}" alt="${description}" title="${description}" loading="lazy" data-src="${preview}"/>
 </a></li>`
 }).join('');
 
